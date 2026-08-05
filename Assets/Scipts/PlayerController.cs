@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,10 +13,16 @@ public class PlayerController : MonoBehaviour
     private float movementY;
 
     public float speed = 0;
+    private int score;
+    public TextMeshProUGUI scoreText;
+    public GameObject winTextObject;
 
     void Start()
     {
         rb = GetComponent <Rigidbody>();
+        score = 0;
+        setScoreText();
+        winTextObject.SetActive(false);
     }
 
     void OnMove(InputValue movementValue)
@@ -24,6 +31,15 @@ public class PlayerController : MonoBehaviour
             movementX = movementVector.x;
             movementY = movementVector.y;
         }
+
+    void setScoreText()
+    {
+        scoreText.text = "Score: " + score.ToString();
+        if (score >= 12)
+        {
+            winTextObject.SetActive(true);
+        }
+    }
 
     void FixedUpdate()
     {
@@ -36,6 +52,8 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
+            score++;
+            setScoreText();
         }
     }
 }
