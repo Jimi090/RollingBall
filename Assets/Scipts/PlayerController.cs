@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+//using System.Numerics;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +26,14 @@ public class PlayerController : MonoBehaviour
         setScoreText();
         winTextObject.SetActive(false);
     }
+    void Update()
+    {
+        if (transform.position[1] < -10)
+        {
+            transform.position = new Vector3(0,0.5f,0);
+            rb.linearVelocity = Vector3.zero;
+        }
+    }
 
     void OnMove(InputValue movementValue)
         {
@@ -31,6 +41,14 @@ public class PlayerController : MonoBehaviour
             movementX = movementVector.x;
             movementY = movementVector.y;
         }
+    
+    void OnJump(InputValue jumpValue)
+    {
+        if (jumpValue.isPressed && rb.linearVelocity[1] == 0)
+        {
+            rb.AddForce(Vector3.up * 6f, ForceMode.Impulse);
+        }
+    }
 
     void setScoreText()
     {
