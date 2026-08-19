@@ -26,12 +26,23 @@ You can play the demo on itch.io:
 - WASD or arrow keys -> movement
 - Space -> jump
 
+### Opening the Project
+
+1. Clone or download this repository.
+2. Open Unity Hub.
+3. Select Add project from disk.
+4. Select the UnityProject folder.
+5. Open the project using Unity 6.
+6. Open the MainMenu scene from the Assets/Scenes folder.
+7. Press Play to run the game in the Unity Editor.
+
+
+![PromoImage2](/PromotionImages/Image2.png)
+
 ### Technologies
 
 - Unity 6
 - C#
-
-![PromoImage2](/PromotionImages/Image2.png)
 
 ### License
 
