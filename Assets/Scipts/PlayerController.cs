@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(0,0.5f,0);
             rb.linearVelocity = Vector3.zero;
+            time = 0;
         }
         if (isTimeRunning)
         {
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
             SetTimeText(time);
         }
         
-        if (score >= 1)
+        if (score >= 1 && isTimeRunning)
         {
             isTimeRunning = false;
             winTextObject.enabled = true;
