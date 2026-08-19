@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EasyMap.unity
     guid: bd84166dfcf7effbdb009a094c597a4f
+  - enabled: 1
+    path: Assets/Scenes/MediumMap.unity
+    guid: 77203824eec8c504eb97bc63bcf1c090
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System;
 //using System.Numerics;
 
 
@@ -16,15 +17,17 @@ public class PlayerController : MonoBehaviour
 
     public float speed = 0;
     private int score;
-    public TextMeshProUGUI scoreText;
-    public GameObject winTextObject;
+    public TextMeshProUGUI timeText;
+    public TextMeshProUGUI winTextObject;
+    private float time = 0;
+    private bool isTimeRunning;
 
     void Start()
     {
         rb = GetComponent <Rigidbody>();
         score = 0;
-        setScoreText();
-        winTextObject.SetActive(false);
+        winTextObject.enabled = false;
+        isTimeRunning = true;
     }
     void Update()
     {
@@ -32,6 +35,25 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(0,0.5f,0);
             rb.linearVelocity = Vector3.zero;
+        }
+        if (isTimeRunning)
+        {
+            time += Time.deltaTime;
+            SetTimeText(time);
+        }
+        
+        if (score >= 1)
+        {
+            isTimeRunning = false;
+            winTextObject.enabled = true;
+
+            string minutes = Mathf.FloorToInt(time/60).ToString();
+            string seconds = Mathf.FloorToInt(time%60).ToString();
+            if (int.Parse(seconds) < 10)
+            {
+                seconds = "0"+seconds;
+            }
+            winTextObject.text = "You won!\nTime: "+minutes+":"+seconds;
         }
     }
 
@@ -50,14 +72,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void setScoreText()
+    void SetTimeText(float time)
     {
-        scoreText.text = "Score: " + score.ToString();
-        if (score >= 12)
+        string minutes = Mathf.FloorToInt(time/60).ToString();
+        string seconds = Mathf.FloorToInt(time%60).ToString();
+        if (int.Parse(seconds) < 10)
         {
-            winTextObject.SetActive(true);
-            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+            seconds = "0"+seconds;
         }
+        timeText.text = minutes+":"+seconds;
     }
 
     void FixedUpdate()
@@ -72,17 +95,6 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             score++;
-            setScoreText();
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-            winTextObject.gameObject.SetActive(true);
-            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
         }
     }
 }
